@@ -1,6 +1,6 @@
 import { Map } from "@vis.gl/react-google-maps";
 import { Suspense } from "react";
-import { EmojiPickerComponent } from "../ui/emoji_picker";
+import { EmojiTextBoxComponent } from "../ui/emoji_text_box";
 
 export function MyMap() {
   return (
@@ -13,7 +13,12 @@ export function MyMap() {
         disableDefaultUI
       />
       <div style={{ position: "absolute", top: "10px", left: "10px" }}>
-        <EmojiPickerComponent onEmojiSelect={(emoji) => console.log(emoji)} />
+        <EmojiTextBoxComponent
+          placeholder="今の気持ちは？"
+          onChange={(a, b) => {
+            console.log(a, b);
+          }}
+        />
       </div>
     </Suspense>
   );
