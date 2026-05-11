@@ -20,7 +20,7 @@ export function EmojiPickerComponent({
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(defaultEmoji);
 
-  const handleEmojiSelect = (emojiData: any) => {
+  const handleEmojiSelect = (emojiData: { native: string }) => {
     const emoji = emojiData.native;
     setSelectedEmoji(emoji);
     onEmojiSelect(emoji);

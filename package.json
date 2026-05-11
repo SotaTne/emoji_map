@@ -1,47 +1,27 @@
 {
-  "name": "emoji_map",
+  "name": "emoji-map-monorepo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "vite:dev": "vite",
-    "dev": "concurrently pnpm:vite:dev pnpm:emulator",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "vite:preview": "vite preview",
-    "preview": "concurrently pnpm:vite:preview pnpm:emulator",
-    "typecheck": "tsc -b --noEmit",
-    "emulator": "firebase emulators:start"
-  },
-  "dependencies": {
-    "@emoji-mart/data": "^1.2.1",
-    "@emoji-mart/react": "^1.1.1",
-    "@vis.gl/react-google-maps": "^1.8.3",
-    "emoji-mart": "^5.6.0",
-    "emoji-picker-react": "^4.19.1",
-    "firebase": "^12.13.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "react-firebase-hooks": "^5.1.1"
+    "dev": "echo 'Please use `mise dev`' && exit 1",
+    "build": "echo 'Please use `mise build`' && exit 1",
+    "lint": "echo 'Please use `mise lint`' && exit 1",
+    "typecheck": "echo 'Please use `mise typecheck`' && exit 1",
+    "emulator": "echo 'Please use `mise emulator`' && exit 1"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
-    "@eslint/js": "^10.0.1",
-    "@rolldown/plugin-babel": "^0.2.3",
-    "@types/babel__core": "^7.20.5",
-    "@types/node": "^24.12.2",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "babel-plugin-react-compiler": "^1.0.0",
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.5.0",
     "prettier": "^3.8.3",
-    "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.10"
+    "typescript": "~6.0.2"
+  },
+  "pnpm": {
+    "neverBuiltDependencies": [],
+    "onlyBuiltDependencies": [
+      "@firebase/util",
+      "protobufjs",
+      "unrs-resolver"
+    ]
   }
 }

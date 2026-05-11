@@ -1,10 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { getApps, initializeApp } from "firebase/app";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 
 // firebaseのjsonファイルのロード
-import firebaseConfig from "../../firebase/firebase-config.json" with { type: "json" };
+import firebaseConfig from "../../../firebase/firebase-config.json" with { type: "json" };
 
 // 効率的なfirebaseの初期化
 export const firebaseApp =
@@ -17,7 +16,7 @@ export const db = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp);
 
 // ローカルで起動する場合エミュレーターを使う。
-if (import.meta.env.MODE === "development") {
+if (import.meta.env.DEV) {
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFirestoreEmulator(db, "localhost", 8080);
 }

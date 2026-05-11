@@ -3,3 +3,22 @@ firebase = "latest"
 node = "26"
 pnpm = "latest"
 java = "temurin-25"
+
+[tasks.emulator]
+run = "firebase emulators:start"
+
+[tasks."web:dev"]
+run = "pnpm --filter @emoji-map/web dev"
+
+[tasks.dev]
+description = "Start firebase emulator and web dev server in parallel"
+depends = ["emulator", "web:dev"]
+
+[tasks.build]
+run = "pnpm -r build"
+
+[tasks.lint]
+run = "pnpm -r lint"
+
+[tasks.typecheck]
+run = "pnpm -r typecheck"
