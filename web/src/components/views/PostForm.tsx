@@ -57,7 +57,9 @@ export function PostForm({ location, userId, onSuccess }: PostFormProps) {
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
-          placeholder={location ? "今の気持ちを一言..." : "地図をタップして場所を選択"}
+          placeholder={
+            location ? "今の気持ちを一言..." : "地図をタップして場所を選択"
+          }
           className="block h-5 w-full bg-transparent text-[13px] text-[var(--color-text)] outline-none placeholder:text-[var(--color-text-sub)]"
         />
       </div>

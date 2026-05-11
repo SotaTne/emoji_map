@@ -1,6 +1,6 @@
 [tools]
 firebase = "latest"
-node = "26"
+node = "24"
 pnpm = "latest"
 java = "temurin-25"
 

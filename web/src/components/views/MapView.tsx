@@ -10,6 +10,7 @@ import { subscribePosts } from "../../lib/db";
 import { PostPin } from "../ui/post_pin";
 import { SelectedPin } from "../ui/selected_pin";
 import { PostForm } from "./PostForm";
+import { useAuthUser } from "../../hooks/useAuthUser";
 
 const tokyoStation = { lat: 35.6812, lng: 139.7671 };
 
@@ -20,6 +21,8 @@ export function MapView() {
   >(null);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
+
+  const user = useAuthUser();
 
   // React の外側にある Firestore のリアルタイム更新を、
   // React の state に同期するための処理。
@@ -44,45 +47,48 @@ export function MapView() {
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <Map
-        style={{ width: "100vw", height: "100vh" }}
-        defaultCenter={tokyoStation}
-        defaultZoom={13}
-        gestureHandling="greedy"
-        disableDefaultUI
-        mapId={mapId}
-        onClick={handleMapClick}
-      >
-        {mapId &&
-          posts.map((post) => (
+      <div className="relative h-full w-full">
+        <Map
+          style={{ width: "100%", height: "100%" }}
+          defaultCenter={tokyoStation}
+          defaultZoom={13}
+          gestureHandling="greedy"
+          disableDefaultUI
+          mapId={mapId}
+          onClick={handleMapClick}
+        >
+          {mapId &&
+            posts.map((post) => (
+              <AdvancedMarker
+                key={post.id}
+                position={post.location}
+                onClick={() => {
+                  const postId = post.id;
+                  if (!postId) return;
+                  setSelectedLocation(null);
+                  setSelectedPostId((currentId) =>
+                    currentId === postId ? null : postId,
+                  );
+                }}
+              >
+                <PostPin post={post} selected={selectedPostId === post.id} />
+              </AdvancedMarker>
+            ))}
+          {mapId && selectedLocation && (
             <AdvancedMarker
-              key={post.id}
-              position={post.location}
-              onClick={() => {
-                const postId = post.id;
-                if (!postId) return;
-                setSelectedLocation(null);
-                setSelectedPostId((currentId) =>
-                  currentId === postId ? null : postId,
-                );
-              }}
+              position={selectedLocation}
+              onClick={() => setSelectedLocation(null)}
             >
-              <PostPin post={post} selected={selectedPostId === post.id} />
+              <SelectedPin />
             </AdvancedMarker>
-        ))}
-        {mapId && selectedLocation && (
-          <AdvancedMarker
-            position={selectedLocation}
-            onClick={() => setSelectedLocation(null)}
-          >
-            <SelectedPin />
-          </AdvancedMarker>
-        )}
-      </Map>
-      <PostForm
-        location={selectedLocation}
-        onSuccess={() => setSelectedLocation(null)}
-      />
+          )}
+        </Map>
+        <PostForm
+          location={selectedLocation}
+          onSuccess={() => setSelectedLocation(null)}
+          userId={user.user?.uid}
+        />
+      </div>
     </APIProvider>
   );
 }
