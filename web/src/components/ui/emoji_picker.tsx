@@ -38,8 +38,8 @@ export function EmojiPickerComponent({
           cursor: "pointer",
           userSelect: "none",
           padding: "4px",
-          borderRadius: "8px",
-          backgroundColor: "#f0f0f0",
+          borderRadius: "12px",
+          backgroundColor: "#f1edff",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -57,10 +57,10 @@ export function EmojiPickerComponent({
         <div
           style={{
             position: "absolute",
-            zIndex: 100,
-            top: "100%",
+            zIndex: 1200,
+            bottom: "100%",
             left: "0",
-            marginTop: "8px",
+            marginBottom: "8px",
           }}
         >
           <Picker

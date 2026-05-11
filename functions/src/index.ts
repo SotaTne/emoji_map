@@ -1,22 +1,27 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import * as logger from "firebase-functions/logger";
 import { setGlobalOptions } from "firebase-functions";
-// import {onRequest} from "firebase-functions/https";
-// import * as logger from "firebase-functions/logger";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
+// グローバル設定
 setGlobalOptions({ maxInstances: 10 });
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+/**
+ * 投稿作成トリガー
+ * ユーザー情報は userId をキーに別コレクションから参照する前提
+ */
+export const onPostCreated = onDocumentCreated("posts/{postId}", (event) => {
+  const snapshot = event.data;
+  if (!snapshot) {
+    logger.error("No data associated with the event");
+    return;
+  }
+
+  const data = snapshot.data();
+  const postId = event.params.postId;
+
+  logger.info(`New post detected! [ID: ${postId}]`, {
+    emoji: data.emoji,
+    mood: data.mood,
+    userId: data.userId || "anonymous",
+  });
+});

@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+:root {
+  --color-bg: #f7f8fb;
+  --color-surface: #ffffff;
+  --color-accent: #6b5ce7;
+  --color-accent-bg: #f1edff;
+  --color-text: #171717;
+  --color-text-sub: #9a9aa2;
+  --color-text-subtle: #5f6169;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
