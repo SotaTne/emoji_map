@@ -26,6 +26,23 @@ function isPostLocation(value: unknown): value is PostLocation {
   return typeof location.lat === "number" && typeof location.lng === "number";
 }
 
+function withoutUndefined<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => withoutUndefined(item)) as T;
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const entries = Object.entries(value).flatMap(([key, item]) => {
+    if (item === undefined) return [];
+    return [[key, withoutUndefined(item)]];
+  });
+
+  return Object.fromEntries(entries) as T;
+}
+
 /**
  * 投稿を新規作成する
  * ユーザー名はIDから引けるため、投稿データには含めない(正規化)
@@ -68,11 +85,13 @@ export function subscribePosts(onPostsChange: (posts: Post[]) => void) {
 }
 
 export async function createMission(params: MissionWithoutServerFields) {
-  return addDoc(collection(db, "missions"), {
+  const missionData = withoutUndefined({
     ...params,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
+
+  return addDoc(collection(db, "missions"), missionData);
 }
 
 export async function stopMission(missionId: string) {
